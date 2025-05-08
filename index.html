@@ -9,17 +9,25 @@
 
     <script>
         function notifyUser() {
-         alert("coming");
-            if (Notification.permission === "granted") {
+    alert("coming");
+    console.log("Notification permission:", Notification.permission);
+
+    if (Notification.permission === "granted") {
+        new Notification("Thank you for registering!");
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+            console.log("Permission result:", permission);
+            if (permission === "granted") {
                 new Notification("Thank you for registering!");
-            } else if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        new Notification("Thank you for registering!");
-                    }
-                });
+            } else {
+                alert("Notification permission denied.");
             }
-        }
+        });
+    } else {
+        alert("Notifications are blocked. Please allow them in browser settings.");
+    }
+}
+
     </script>
 </body>
 </html>
