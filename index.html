@@ -13,6 +13,7 @@
         }
 
         function startNotificationLoop() {
+            alert("comimg")
             if (Notification.permission === "granted") {
                 showNotification();
                 setInterval(showNotification, 10000); // every 10 seconds
