@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Notification Example</title>
+    <title>Notification Every 10 Seconds</title>
 </head>
 <body>
-    <h3><center>sunny notification test project</center></h3>
-    <button onclick="notifyUser()">Notify Registered User</button>
+    <h3><center>Sunny Notification Test Project</center></h3>
+    <button onclick="startNotificationLoop()">Start Notifications</button>
 
     <script>
-        function notifyUser() {
-    alert("coming");
-    console.log("Notification permission:", Notification.permission);
+        function showNotification() {
+            new Notification("🔔 Reminder: Thanks for registering!");
+        }
 
-    if (Notification.permission === "granted") {
-        new Notification("Thank you for registering!");
-    } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(permission => {
-            console.log("Permission result:", permission);
-            if (permission === "granted") {
-                new Notification("Thank you for registering!");
+        function startNotificationLoop() {
+            if (Notification.permission === "granted") {
+                showNotification();
+                setInterval(showNotification, 10000); // every 10 seconds
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        showNotification();
+                        setInterval(showNotification, 10000); // every 10 seconds
+                    } else {
+                        alert("Notifications not allowed by the user.");
+                    }
+                });
             } else {
-                alert("Notification permission denied.");
+                alert("Notifications are blocked. Please allow them in browser settings.");
             }
-        });
-    } else {
-        alert("Notifications are blocked. Please allow them in browser settings.");
-    }
-}
-
+        }
     </script>
 </body>
 </html>
