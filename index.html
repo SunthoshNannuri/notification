@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Notification Every 10 Seconds</title>
+    <title>Notification Example</title>
 </head>
 <body>
     <h3><center>Sunny Notification Test Project</center></h3>
-    <button onclick="startNotificationLoop()">Start Notifications</button>
+    <button onclick="startNotifications()">Notify Registered User</button>
 
     <script>
         function showNotification() {
-            alert("notification function coming")
-            new Notification("🔔 Reminder: Thanks for registering!");
+            try {
+                new Notification("🔔 Reminder: Thanks for registering!");
+            } catch (error) {
+                console.error("Notification error:", error);
+            }
         }
 
-        function startNotificationLoop() {
-            alert("comimg")
+        function startNotifications() {
+            alert("notification function coming");
+
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+                return;
+            }
+
             if (Notification.permission === "granted") {
                 showNotification();
                 setInterval(showNotification, 10000); // every 10 seconds
@@ -24,11 +33,11 @@
                         showNotification();
                         setInterval(showNotification, 10000); // every 10 seconds
                     } else {
-                        alert("Notifications not allowed by the user.");
+                        alert("Notification permission was denied.");
                     }
                 });
             } else {
-                alert("Notifications are blocked. Please allow them in browser settings.");
+                alert("Notification permission was previously denied.");
             }
         }
     </script>
